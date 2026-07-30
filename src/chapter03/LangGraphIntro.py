@@ -1,7 +1,6 @@
 from langgraph.graph import StateGraph, START, END
 from typing_extensions import TypedDict
 
-
 # 1. 简单的状态管理示例
 class JobApplicationState(TypedDict):
     job_description: str
@@ -16,19 +15,18 @@ def generate_application(state):
     print("...generating application ...")
     return {"application": "some_fake_application"}
 
-# builder = StateGraph(JobApplicationState)
-# builder.add_node("analyze_job_description", analyze_job_description)
-# builder.add_node("generate_application", generate_application)
-#
-# builder.add_edge(START, "analyze_job_description")
-# builder.add_edge("analyze_job_description", "generate_application")
-# builder.add_edge("generate_application", END)
-#
-# graph = builder.compile()
-#
-# # from IPython.display import Image, display
-# # display(Image(graph.get_graph().draw_mermaid_png()))
-#
+builder = StateGraph(JobApplicationState)
+builder.add_node("analyze_job_description", analyze_job_description)
+builder.add_node("generate_application", generate_application)
+
+builder.add_edge(START, "analyze_job_description")
+builder.add_edge("analyze_job_description", "generate_application")
+builder.add_edge("generate_application", END)
+
+graph = builder.compile()
+
+# from IPython.display import Image, display
+# display(Image(graph.get_graph().draw_mermaid_png()))
 
 def show_graph(graph):
     # 生成并保存图表
@@ -42,14 +40,13 @@ def show_graph(graph):
     import os
     os.startfile("langgraph_intro.png")  # Windows
 
-# from langchain_core.runnables import Runnable
-# print(isinstance(graph, Runnable))
-#
+from langchain_core.runnables import Runnable
+print(isinstance(graph, Runnable))
 
-# show_graph(graph)
+show_graph(graph)
 
-# res = graph.invoke({"job_description": "fake_id"})
-# print(res)
+res = graph.invoke({"job_description": "fake_id"})
+print(res)
 
 # 2. 带有条件边的状态管理
 
