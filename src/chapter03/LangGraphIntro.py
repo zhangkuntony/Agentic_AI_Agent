@@ -1,6 +1,18 @@
 from langgraph.graph import StateGraph, START, END
 from typing_extensions import TypedDict
 
+def show_graph(graph):
+    # 生成并保存图表
+    png_bytes = graph.get_graph().draw_mermaid_png()
+    with open("langgraph_intro.png", "wb") as f:
+        f.write(png_bytes)
+
+    print("Graph image saved to langgraph_intro.png")
+
+    # 自动用系统默认图片查看器打开
+    import os
+    os.startfile("langgraph_intro.png")  # Windows
+
 # 1. 简单的状态管理示例
 class JobApplicationState(TypedDict):
     job_description: str
@@ -28,18 +40,6 @@ graph = builder.compile()
 # from IPython.display import Image, display
 # display(Image(graph.get_graph().draw_mermaid_png()))
 
-def show_graph(graph):
-    # 生成并保存图表
-    png_bytes = graph.get_graph().draw_mermaid_png()
-    with open("langgraph_intro.png", "wb") as f:
-        f.write(png_bytes)
-
-    print("Graph image saved to langgraph_intro.png")
-
-    # 自动用系统默认图片查看器打开
-    import os
-    os.startfile("langgraph_intro.png")  # Windows
-
 from langchain_core.runnables import Runnable
 print(isinstance(graph, Runnable))
 
@@ -63,6 +63,7 @@ def is_suitable_condition(state: JobApplicationState) -> Literal["generate_appli
 
 builder.add_edge(START, "analyze_job_description")
 builder.add_conditional_edges("analyze_job_description", is_suitable_condition)
+builder.add_edge("generate_application", END)
 
 graph = builder.compile()
 
@@ -70,4 +71,3 @@ graph = builder.compile()
 # display(Image(graph.get_graph().draw_mermaid_png()))
 
 show_graph(graph)
-
