@@ -1,17 +1,8 @@
 from langgraph.graph import StateGraph, START, END
 from typing_extensions import TypedDict
 
-def show_graph(graph):
-    # 生成并保存图表
-    png_bytes = graph.get_graph().draw_mermaid_png()
-    with open("langgraph_intro.png", "wb") as f:
-        f.write(png_bytes)
+from utils import show_graph
 
-    print("Graph image saved to langgraph_intro.png")
-
-    # 自动用系统默认图片查看器打开
-    import os
-    os.startfile("langgraph_intro.png")  # Windows
 
 # 1. 简单的状态管理示例
 class JobApplicationState(TypedDict):
