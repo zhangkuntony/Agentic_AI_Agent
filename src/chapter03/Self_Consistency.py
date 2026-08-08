@@ -9,7 +9,6 @@ from langchain_core.prompts import ChatPromptTemplate, PromptTemplate
 from langchain_openai import ChatOpenAI
 from operator import itemgetter
 
-
 model = ChatOpenAI(
     api_key=API_KEY,
     base_url=BASE_URL,
