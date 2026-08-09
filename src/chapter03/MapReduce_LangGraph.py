@@ -146,7 +146,7 @@ graph.add_edge("summarize_text_chunk", "generate_final_summary")
 graph.add_edge("generate_final_summary", END)
 
 app = graph.compile()
-# show_graph(app)
+show_graph(app)
 
 # ============================================================
 # 运行
