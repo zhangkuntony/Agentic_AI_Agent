@@ -1,9 +1,4 @@
-import sys
-from pathlib import Path
-
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-
-from config import API_KEY, BASE_URL, MODEL_NAME
+from config.config import API_KEY, BASE_URL, MODEL_NAME
 from langchain_core.language_models import FakeListLLM
 from langchain_core.messages import SystemMessage, HumanMessage
 from langchain_core.prompts import ChatPromptTemplate

@@ -6,3 +6,4 @@ langgraph
 openai
 pydantic
 python-dotenv
+volcenginesdkarkruntime

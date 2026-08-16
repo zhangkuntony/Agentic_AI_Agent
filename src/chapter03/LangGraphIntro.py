@@ -1,8 +1,7 @@
 from langgraph.graph import StateGraph, START, END
 from typing_extensions import TypedDict
 
-from utils import show_graph
-
+from utils.utils import show_graph
 
 # 1. 简单的状态管理示例
 class JobApplicationState(TypedDict):

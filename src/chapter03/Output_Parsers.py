@@ -1,17 +1,11 @@
-import sys
-from pathlib import Path
-
-from utils import show_graph
-
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-
-from config import API_KEY, BASE_URL, MODEL_NAME
+from config.config import API_KEY, BASE_URL, MODEL_NAME
 from enum import Enum
 from langchain_classic.output_parsers import EnumOutputParser
 from langchain_core.messages import HumanMessage
 from langchain_openai import ChatOpenAI
 from langgraph.graph import StateGraph, START, END
 from typing_extensions import TypedDict
+from utils.utils import show_graph
 
 model = ChatOpenAI(
     api_key=API_KEY,

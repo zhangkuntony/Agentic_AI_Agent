@@ -3,9 +3,7 @@ from langgraph.graph import StateGraph, START, END
 from operator import add
 from typing import Annotated, Optional, Union
 from typing_extensions import TypedDict, Literal
-
-from utils import show_graph
-
+from utils.utils import show_graph
 
 # 1. StateGraph默认后写覆盖先写
 class JobApplicationState(TypedDict):

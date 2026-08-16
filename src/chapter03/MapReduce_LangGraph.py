@@ -1,17 +1,13 @@
 import operator
-import sys
-from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-
-from config import API_KEY, BASE_URL, MODEL_NAME
+from config.config import API_KEY, BASE_URL, MODEL_NAME
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import ChatPromptTemplate, PromptTemplate
 from langgraph.graph import StateGraph, START, END
 from langgraph.types import Send
 from langchain_openai import ChatOpenAI
 from typing import TypedDict, Annotated
-from utils import show_graph
+from utils.utils import show_graph
 
 model = ChatOpenAI(
     api_key=API_KEY,
