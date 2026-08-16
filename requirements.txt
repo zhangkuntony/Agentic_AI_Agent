@@ -1,8 +1,14 @@
 dotenv
+faiss-cpu
+jq
+langchain-chroma
 langchain-community
 langchain-core
+langchain-experimental
 langchain-openai
+langchain-text-splitters
 langgraph
+numpy
 openai
 pydantic
 python-dotenv
