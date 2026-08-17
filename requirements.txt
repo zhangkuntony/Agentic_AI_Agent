@@ -13,3 +13,4 @@ openai
 pydantic
 python-dotenv
 volcenginesdkarkruntime
+xmltodict

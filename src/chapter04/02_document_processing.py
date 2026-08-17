@@ -3,30 +3,30 @@ from langchain_experimental.text_splitter import SemanticChunker
 from langchain_text_splitters import CharacterTextSplitter, RecursiveCharacterTextSplitter
 from utils.ark_embeddings import ArkMultimodalEmbeddings
 
-# # 1. Document loaders
-#
-# # Load a json file
-# loader = JSONLoader(
-#     file_path="knowledge_base.json",
-#     jq_schema=".[].content",        # This extracts the content field from each array item
-#     text_content=True
-# )
-# documents = loader.load()
-# print(documents)
-#
-# # 2. Fixed-Size chunking
-#
-# text_splitter = CharacterTextSplitter(
-#     separator=" ",          # Split on spaces to avoid breaking words
-#     chunk_size=200,
-#     chunk_overlap=20
-# )
-#
-# chunks = text_splitter.split_documents(documents)
-# print(f"Generated {len(chunks)} chunks from document")
-#
-# for chunk in chunks:
-#     print(chunk)
+# 1. Document loaders
+
+# Load a json file
+loader = JSONLoader(
+    file_path="knowledge_base.json",
+    jq_schema=".[].content",        # This extracts the content field from each array item
+    text_content=True
+)
+documents = loader.load()
+print(documents)
+
+# 2. Fixed-Size chunking
+
+text_splitter = CharacterTextSplitter(
+    separator=" ",          # Split on spaces to avoid breaking words
+    chunk_size=200,
+    chunk_overlap=20
+)
+
+chunks = text_splitter.split_documents(documents)
+print(f"Generated {len(chunks)} chunks from document")
+
+for chunk in chunks:
+    print(chunk)
 
 
 # 3. Recursive Character Chunking
