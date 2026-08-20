@@ -5,25 +5,25 @@ from utils.ark_embeddings import ArkMultimodalEmbeddings
 # Initialize the embeddings model with Ark Embeddings Model
 embeddings_model = ArkMultimodalEmbeddings()
 
-# # 1. Basic Embeddings Usage
-#
-# # Create embeddings from example sentences
-# text1 = "The cat sat on the mat"
-# text2 = "A feline rested on the carpet"
-# text3 = "Python is a programming language"
-#
-# # Get embeddings using LangChain
-# embeddings = embeddings_model.embed_documents([text1, text2, text3])
-#
-# # These similar sentences will have similar embeddings
-# embedding1 = embeddings[0]      # Embedding for "The cat sat on the mat"
-# embedding2 = embeddings[1]      # Embedding for "A feline rested on the carpet"
-# embedding3 = embeddings[2]      # Embedding for "Python is a programming language"
-#
-# # Output shows number of documents and embedding dimensions
-# print(f"Number of documents: {len(embeddings)}")
-# print(f"Dimensions per embeddings: {len(embeddings[0])}")
-# print(f"Sample of embeddings: {embeddings[0][:10]}")
+# 1. Basic Embeddings Usage
+
+# Create embeddings from example sentences
+text1 = "The cat sat on the mat"
+text2 = "A feline rested on the carpet"
+text3 = "Python is a programming language"
+
+# Get embeddings using LangChain
+embeddings = embeddings_model.embed_documents([text1, text2, text3])
+
+# These similar sentences will have similar embeddings
+embedding1 = embeddings[0]      # Embedding for "The cat sat on the mat"
+embedding2 = embeddings[1]      # Embedding for "A feline rested on the carpet"
+embedding3 = embeddings[2]      # Embedding for "Python is a programming language"
+
+# Output shows number of documents and embedding dimensions
+print(f"Number of documents: {len(embeddings)}")
+print(f"Dimensions per embeddings: {len(embeddings[0])}")
+print(f"Sample of embeddings: {embeddings[0][:10]}")
 
 # 2. Vector Store Setup
 
