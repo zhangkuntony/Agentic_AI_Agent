@@ -12,5 +12,6 @@ numpy
 openai
 pydantic
 python-dotenv
+streamlit
 volcenginesdkarkruntime
 xmltodict

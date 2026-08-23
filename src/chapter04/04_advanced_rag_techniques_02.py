@@ -4,6 +4,7 @@ from langchain_core.documents import Document
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_openai import ChatOpenAI
+from typing import List, Dict
 from utils.ark_embeddings import ArkMultimodalEmbeddings
 
 # 1. Source Attribution
@@ -83,3 +84,87 @@ def generate_attribution_response(question):
 question = "How do transformer models work and what are some examples?"
 attributed_answer = generate_attribution_response(question)
 print(attributed_answer)
+
+# 2. Self-consistency Checking
+
+def verify_response_accuarcy(
+        retrieved_docs: List[Document],
+        generated_answer: str,
+        llm: ChatOpenAI = None
+) -> Dict:
+    """
+    Verify if a generated answer is fully supported by the retrieved documents.
+    Args:
+        retrieved_docs: List of documents used to generate the answer
+        generated_answer: The answer produced by the RAG system
+        llm: Language model to use for verification
+    Returns:
+        Dictionary containing verification results and any identified issues
+    """
+    if llm is None:
+        llm = ChatOpenAI(
+            api_key=API_KEY,
+            base_url=BASE_URL,
+            model=MODEL_NAME,
+            temperature=0
+        )
+
+    # Create context from retrieved documents
+    context = "\n\n".join([doc.page_content for doc in retrieved_docs])
+
+    # Define verification prompt - fixed to avoid JSON formatting issues in the template
+    verification_prompt = ChatPromptTemplate.from_template("""
+    As a fact-checking assistant, verify whether the following answer is fully supported
+    by the provided context. Identify any statements that are not supported or contradict the context.
+    
+    Context:
+    {context}
+    
+    Answer to verify:
+    {answer}
+    
+    Perform a detailed analysis with the following structure:
+    1. List any factual claims in the answer
+    2. For each claim, indicate whether it is:
+       - Fully supported (provide the supporting text from context)
+       - Partially supported (explain what parts lack support)
+       - Contradicted (identify the contradiction)
+       - Not mentioned in context
+    3. Overall assessment: Is the answer fully grounded in the context?
+    
+    Return your analysis in JSON format with the following structure:
+    {{
+      "claims": [
+        {{
+          "claim": "The factual claim",
+          "status": "fully_supported|partially_supported|contradicted|not_mentioned",
+          "evidence": "Supporting or contradicting text from context",
+          "explanation": "Your explanation"
+        }}
+      ],
+      "fully_grounded": true|false,
+      "issues_identified": ["List any specific issues"]
+    }}
+    """)
+
+    # Create verification chain using LCEL
+    verification_chain = verification_prompt | llm | StrOutputParser()
+
+    # Run verification
+    result = verification_chain.invoke({
+        "context": context,
+        "answer": generated_answer,
+    })
+
+    return result
+
+# Example usage
+retrieved_docs = [
+    Document(page_content="The transformer architecture was introduced in the paper 'Attention Is All You Need' by Vaswani et al. in 2017. It relies on self-attention mechanisms instead of recurrent or convolutional neural networks."),
+    Document(page_content="BERT is a transformer-based model developed by Google that uses masked language modeling and next sentence prediction as pre-training objectives.")
+]
+
+generated_answer = "The transformer architecture was introduced by OpenAI in 2018 and uses recurrent neural networks. BERT is a transformer model developed by Google."
+
+verification_result = verify_response_accuarcy(retrieved_docs, generated_answer)
+print(verification_result)
