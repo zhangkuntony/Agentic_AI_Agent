@@ -14,13 +14,16 @@ llm = ChatOpenAI(
 
 def mocked_google_search(query: str) -> str:
     print(f"CALLED GOOGLE SEARCH with query={query}")
-    return "Donald Trump is a president of USA and he's 81 years old"
+    return (
+        "The current US President (as of 2025) is Donald Trump. "
+        "He was born on June 14, 1946, making him 79 years old in 2025. "
+        "His age is 79."
+    )
 
 def mocked_calculator(expression: str) -> float:
     print(f"CALLED CALCULATOR with expression={expression}")
-    if "sqrt" in expression:
-        return math.sqrt(81 * 132)
-    return 81 * 132
+    expr = expression.replace("sqrt", "math.sqrt")
+    return eval(expr, {"math": math})
 
 calculator_tool = {
     "type": "function",
