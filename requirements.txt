@@ -1,3 +1,4 @@
+arxiv
 dotenv
 faiss-cpu
 jq
@@ -16,4 +17,5 @@ pydantic
 python-dotenv
 streamlit
 volcenginesdkarkruntime
+wikipedia
 xmltodict
