@@ -38,7 +38,7 @@ from config.config import API_KEY, BASE_URL, MODEL_NAME
 from langchain.agents import AgentState, create_agent
 from langchain_community.agent_toolkits.load_tools import load_tools
 from langchain_core.messages import HumanMessage
-from langchain_core.prompts import PromptTemplate, ChatPromptTemplate
+from langchain_core.prompts import PromptTemplate
 from langchain_openai import ChatOpenAI
 
 llm = ChatOpenAI(
